@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if book else 'Add' }} book{% endblock %}
+{% block content %}
+<div class="top"><h1>{{ 'Edit book' if book else 'Add book' }}</h1></div>
+<form class="card" method="post" style="max-width:560px">
+  <div class="field"><label for="title">Title</label><input id="title" name="title" value="{{ book.title if book }}" required></div>
+  <div class="field"><label for="author">Author</label><input id="author" name="author" value="{{ book.author if book }}" required></div>
+  <div class="field"><label for="isbn">ISBN</label><input id="isbn" name="isbn" value="{{ book.isbn if book }}" required></div>
+  <div class="field"><label for="category">Category</label><input id="category" name="category" value="{{ book.category if book }}"></div>
+  <div class="field"><label for="total_copies">Total copies</label><input id="total_copies" name="total_copies" type="number" min="1" value="{{ book.total_copies if book else 1 }}" required></div>
+  <button class="btn" type="submit">Save</button>
+  <a class="btn grey" href="{{ url_for('books') }}">Cancel</a>
+</form>
+{% endblock %}

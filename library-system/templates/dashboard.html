@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="top"><h1>Dashboard</h1></div>
+<div class="stats">
+  <div class="card"><div class="stat-label">Total books</div><div class="stat-value">{{ stats.books }}</div></div>
+  <div class="card"><div class="stat-label">Members</div><div class="stat-value">{{ stats.members }}</div></div>
+  <div class="card"><div class="stat-label">Books issued</div><div class="stat-value">{{ stats.issued }}</div></div>
+  <div class="card"><div class="stat-label">Overdue</div><div class="stat-value">{{ stats.overdue }}</div></div>
+</div>
+<h2>Recent transactions</h2>
+<div class="card wide">
+  <table>
+    <tr><th>Book</th><th>Member</th><th>Issued</th><th>Due</th><th>Status</th></tr>
+    {% for l in recent %}
+    <tr>
+      <td>{{ l.title }}</td><td>{{ l.member_name }}</td><td>{{ l.issue_date }}</td><td>{{ l.due_date }}</td>
+      <td>
+        {% if l.status == 'returned' %}<span class="chip ok">Returned</span>
+        {% elif l.due_date < today %}<span class="chip bad">Overdue</span>
+        {% else %}<span class="chip warn">Issued</span>{% endif %}
+      </td>
+    </tr>
+    {% else %}<tr><td colspan="5" class="muted">No transactions yet.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login - City Library</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="login-wrap">
+  <form class="card login-card" method="post">
+    <h1>City Library</h1>
+    <p class="muted">Sign in to manage books and members</p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}<div class="flash {{ category }}" style="margin-bottom:16px">{{ message }}</div>{% endfor %}
+    {% endwith %}
+    <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
+    <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" required></div>
+    <button class="btn" type="submit">Sign in</button>
+    <p class="muted">Demo: admin@library.com / admin123<br>Student: student@library.com / student123</p>
+  </form>
+</div>
+</body>
+</html>

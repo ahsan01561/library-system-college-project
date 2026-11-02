@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Members{% endblock %}
+{% block content %}
+<div class="top"><h1>Members</h1></div>
+<div class="grid2">
+  <form class="card" method="post">
+    <h2 style="margin-bottom:16px">Add member</h2>
+    <div class="field"><label for="name">Full name</label><input id="name" name="name" required></div>
+    <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
+    <div class="field"><label for="phone">Phone</label><input id="phone" name="phone"></div>
+    <div class="field"><label for="password">Password (default: student123)</label><input id="password" name="password" type="password"></div>
+    <button class="btn" type="submit">Add member</button>
+  </form>
+  <div class="card wide">
+    <table>
+      <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Books</th></tr>
+      {% for m in members %}
+      <tr><td>{{ m.member_code }}</td><td>{{ m.name }}</td><td>{{ m.email }}</td><td>{{ m.phone }}</td><td>{{ m.active_loans }} / {{ max_books }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

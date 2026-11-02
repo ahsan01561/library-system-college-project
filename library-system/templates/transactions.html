@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Issue / Return{% endblock %}
+{% block content %}
+<div class="top"><h1>Issue / Return</h1></div>
+<form class="card" method="post" action="{{ url_for('issue') }}" style="max-width:560px">
+  <h2 style="margin-bottom:16px">Issue a book</h2>
+  <div class="field"><label for="member_code">Member ID (example: M1001)</label><input id="member_code" name="member_code" required></div>
+  <div class="field"><label for="isbn">Book ISBN</label><input id="isbn" name="isbn" required></div>
+  <p class="muted">Due date is set automatically to {{ loan_days }} days from today.</p>
+  <button class="btn" type="submit">Confirm issue</button>
+</form>
+<h2>Books currently issued (fine: Rs {{ fine_per_day }} per late day)</h2>
+<div class="card wide">
+  <table>
+    <tr><th>Book</th><th>Member</th><th>Issued</th><th>Due</th><th>Fine now</th><th>Action</th></tr>
+    {% for l in loans %}
+    <tr>
+      <td>{{ l.title }}</td><td>{{ l.member_code }} - {{ l.member_name }}</td><td>{{ l.issue_date }}</td>
+      <td>{{ l.due_date }} {% if l.due_date < today %}<span class="chip bad">Overdue</span>{% endif %}</td>
+      <td>Rs {{ l.fine }}</td>
+      <td><form class="inline" method="post" action="{{ url_for('return_book', loan_id=l.id) }}"><button class="btn small" type="submit">Return</button></form></td>
+    </tr>
+    {% else %}<tr><td colspan="6" class="muted">No books are currently issued.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}
